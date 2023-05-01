@@ -21,5 +21,15 @@
     #error "Compiler not Supported"
 #endif 
 
+#ifdef GEARHEAD_ENABLE_ASSERTS
+    #define GEARHEAD_ASSERT(x, ...) {if(!x){ GEARHEAD_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+    #define GEARHEAD_CORE_ASSERT(x, ...) {if(!x){ GEARHEAD_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+
+#else
+    #define GEARHEAD_ASSERT(x, ...)
+    #define GEARHEAD_CORE_ASSERT(x, ...)
+
+#endif
+
 
 #define BIT(x) (1 << x)

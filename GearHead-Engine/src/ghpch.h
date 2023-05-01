@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "GearHead/Log.h"
 
 
 #ifdef GEARHEAD_PLATFORM_WINDOWS
