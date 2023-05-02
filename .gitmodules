@@ -1,6 +1,6 @@
-[submodule "GearHead-Engine/vendor/GLFW"]
-	path = GearHead-Engine/vendor/GLFW
-	url = https://github.com/TheCherno/glfw
 [submodule "GearHead-Engine/vendor/GLM"]
 	path = GearHead-Engine/vendor/GLM
 	url = https://github.com/g-truc/glm
+[submodule "GearHead-Engine/vendor/GLFW"]
+	path = GearHead-Engine/vendor/GLFW
+	url = https://github.com/glfw/glfw
