@@ -4,3 +4,9 @@
 [submodule "GearHead-Engine/vendor/GLFW"]
 	path = GearHead-Engine/vendor/GLFW
 	url = https://github.com/glfw/glfw
+[submodule "GearHead-Engine/vendor/spdlog"]
+	path = GearHead-Engine/vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "GearHead-Engine/vendor/ImGUI"]
+	path = GearHead-Engine/vendor/ImGUI
+	url = https://github.com/ocornut/imgui

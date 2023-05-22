@@ -17,7 +17,10 @@ class VulkanConfiguration:
 
     @classmethod
     def GetVulkanSDK(cls):
-        return cls.vSDK
+        sdk = cls.vSDK
+        sdk = sdk.replace('\\', '/')
+        print(sdk)
+        return sdk
 
     @classmethod
     def Validate(cls):
