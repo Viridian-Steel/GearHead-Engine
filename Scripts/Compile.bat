@@ -1,10 +1,10 @@
-IF %1 == "" ( echo need source ) 
-IF %2 == "" ( echo need output destination)
+@echo off
 cd %1
 mkdir Build
 cd Build
-cmake ..
-cmake --build .
+cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake .. -DCMAKE_BUILD_TYPE=Debug
+cmake --build . --config Release
+cmake --build . --config Debug
+cmake --install . --config Release --prefix %2
 cmake --install . --config Debug --prefix %2
-
-:: 1 = src, 2 = Output dir

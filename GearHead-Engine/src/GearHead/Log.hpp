@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.h"
+#include "Core.hpp"
 
 #pragma warning(push, 0)
 #include <spdlog/spdlog.h>

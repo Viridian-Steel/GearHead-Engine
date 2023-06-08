@@ -5,14 +5,18 @@
 #include <utility>
 #include <algorithm>
 #include <functional>
+#include <optional>
 
 #include <string>
 #include <sstream>
 #include <vector>
+#include <map>
+#include <set>
 #include <unordered_map>
 #include <unordered_set>
+#include <stdexcept>
 
-#include "GearHead/Log.h"
+#include "GearHead/Log.hpp"
 
 
 #ifdef GEARHEAD_PLATFORM_WINDOWS

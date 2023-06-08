@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GearHead/Core.h"
+#include "GearHead/Core.hpp"
 
 
 namespace GearHead {

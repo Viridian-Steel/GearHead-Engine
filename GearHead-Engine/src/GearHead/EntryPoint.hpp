@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+#include <stdexcept>
+#include <cstdlib>
 
 #ifdef GEARHEAD_PLATFORM_WINDOWS
 
@@ -12,7 +15,14 @@ int main( int argc, char** argv) {
     GEARHEAD_INFO("TESTING! Var={0}",a);
 
     auto app = GearHead::CreateApplication();
-    app->Run();
+	try {
+		app->Run();
+
+	}
+	catch (const std::exception& e) {
+		std::cerr << e.what() << std::endl;
+		return EXIT_FAILURE;
+	}
     delete app;
 }
 

@@ -1,9 +1,6 @@
 #pragma once
 
 
-
-
-
 #ifdef GEARHEAD_PLATFORM_WINDOWS
     #ifdef GEARHEAD_BUILD_DLL
         #define GEARHEAD_API __declspec(dllexport)

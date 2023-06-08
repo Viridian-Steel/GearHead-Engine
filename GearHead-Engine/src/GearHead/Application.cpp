@@ -1,15 +1,14 @@
-#include "ghpch.h"
+#include "ghpch.hpp"
 
-#include "Application.h"
-#include "Events/ApplicationEvent.h"
-#include "Log.h"
+#include "Application.hpp"
+#include "Events/ApplicationEvent.hpp"
+#include "Log.hpp"
 
-#include <GLFW/glfw3.h>
 
 
 namespace GearHead{
     Application::Application() {
-        m_Window = std::unique_ptr<Window>(Window::Create());
+		        
     }
 
     Application::~Application(){
@@ -17,12 +16,11 @@ namespace GearHead{
     }
     
     void Application::Run(){
-
-        while(m_Running){
-			m_Window->OnUpdate();
-
-        }
-
+		while (ghWindow.ShouldClose()) {
+			
+			ghWindow.OnUpdate();
+		}
+		GEARHEAD_CORE_CRITICAL("APP CLOSED");
     }
 
 }

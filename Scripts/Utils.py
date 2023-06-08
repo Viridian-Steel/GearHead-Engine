@@ -9,6 +9,8 @@ import urllib
 from zipfile import ZipFile
 
 
+
+
 def GetSystemEnvironmentVariable(name):
     key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, r"System\CurrentControlSet\Control\Session Manager\Environment")
     try:
