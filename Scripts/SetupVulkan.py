@@ -10,7 +10,7 @@ from urllib.request import urlopen
 
 class VulkanConfiguration:
     requiredVulkanVersion = "1.3."
-    installVulkanVersion = "1.3.246.0"
+    installVulkanVersion = "1.3.250.0"
     vulkanDirectory = "./GearHead-Engine/vendor/VulkanSDK"
 
     vSDK = ""
@@ -19,7 +19,6 @@ class VulkanConfiguration:
     def GetVulkanSDK(cls):
         sdk = cls.vSDK
         sdk = sdk.replace('\\', '/')
-        print(sdk)
         return sdk
 
     @classmethod

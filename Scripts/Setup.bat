@@ -1,4 +1,4 @@
 @echo off
-pip install command_runner
+cd %~dp0
 python Setup.py
 PAUSE

@@ -8,7 +8,7 @@ class PythonConfiguration:
         if not cls.__ValidatePython():
             return #Needs to install python
         
-        for packageName in ["requests"]:
+        for packageName in ["requests", "packaging"]:
             if not cls.__ValidatePackage(packageName):
                 return #needs to allow to install packages
 

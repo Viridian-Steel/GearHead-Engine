@@ -8,7 +8,19 @@ import Utils
 class CmakeConfiguration:
     cmakeVersion = "3.26.3"
     cmakeZipUrls = f"https://github.com/Kitware/CMake/releases/download/v{cmakeVersion}/cmake-{cmakeVersion}-windows-x86_64.zip"
-    cmakeDirectory = "./vendor/Cmake"
+    cmakeDirectory = "./Vendor/Cmake"
+
+    cmakePath = ""
+
+    externalCmake = True
+
+    @classmethod
+    def UseExternal(cls) -> bool:
+        return cls.externalCmake
+    
+    @classmethod
+    def GetPath(cls) -> str:
+        return cls.cmakePath
 
     @classmethod
     def Validate(cls):
@@ -23,6 +35,13 @@ class CmakeConfiguration:
     def CheckIfCmakeInstalled(cls)-> bool: 
 
         #check if pre-existing version exists
+
+        cmakeExe = Path(f"{os.path.abspath(cls.cmakeDirectory)}/cmake-{cls.cmakeVersion}-windows-x86_64/bin/cmake.exe")
+        if(cmakeExe.exists()):
+           cls.externalCmake = False
+           cls.cmakePath = str(cmakeExe)
+           return True
+
         try:
             out = subprocess.check_output(['cmake', '--version']).decode('utf-8')
         except FileNotFoundError:
@@ -38,6 +57,8 @@ class CmakeConfiguration:
         if version.parse(cmakeversion) < version.parse("3.10"):
             print("Version of Cmake incompatible.\n")
             return cls.InstallCmake()
+
+
 
         return True
 

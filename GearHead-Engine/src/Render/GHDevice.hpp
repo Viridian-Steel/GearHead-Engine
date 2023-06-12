@@ -18,6 +18,12 @@ namespace GearHead {
 		}
 	};
 
+	struct SwapChainSupportDetails {
+		VkSurfaceCapabilitiesKHR capabilities;
+		std::vector<VkSurfaceFormatKHR> formats;
+		std::vector<VkPresentModeKHR> presentModes;
+	};
+
 	class GEARHEAD_API GHDevice {
 	public:
 #ifndef	GEARHEAD_DEBUG
@@ -44,6 +50,7 @@ namespace GearHead {
 		void pickPhysicalDevice();
 		void createLogicalDevice();
 
+		SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
 
 		bool checkDeviceExtensionSupport(VkPhysicalDevice device);
 		bool checkValidationLayerSupport();

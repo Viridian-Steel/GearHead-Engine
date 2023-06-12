@@ -186,7 +186,8 @@ namespace GearHead {
 		vkGetPhysicalDeviceFeatures(physicalDevice, &deviceFeatures);
 		createInfo.pEnabledFeatures = &deviceFeatures;
 
-		createInfo.enabledExtensionCount = 0;
+		createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
+		createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
 		if (enableValidationLayers) {
 			createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
@@ -208,6 +209,16 @@ namespace GearHead {
 
 
 
+	}
+
+	SwapChainSupportDetails GHDevice::querySwapChainSupport(VkPhysicalDevice device)
+	{
+		SwapChainSupportDetails details;
+
+		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &details.capabilities);
+
+
+		return details;
 	}
 
 	int GHDevice::rateDeviceSuitability(VkPhysicalDevice device) {
