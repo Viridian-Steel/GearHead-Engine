@@ -1,8 +1,6 @@
 **/*.vcxproj
 
 # Build results
-**/bin/
-bin-int/
 **/Build
 **/Out/
 
@@ -11,13 +9,8 @@ bin-int/
 /GearHead-Engine/Libs
 /GearHead-Engine/Include
 
-# Vendor Files will be automatically downloaded depending on need, except for the premake customization files. Those need to be there.
-#!/Vendor
-#
 /Vendor/*
-#!/Vendor/premake
-#/Vendor/premake/*
-#!/Vendor/premake/premake_customization
+
 
 
 
@@ -45,6 +38,7 @@ bin-int/
 
 *.cmake
 
+**.lua
 
 # log files are generated during execution
 *.log
