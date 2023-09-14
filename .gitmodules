@@ -1,12 +1,26 @@
 [submodule "GearHead-Engine/vendor/GLM"]
 	path = GearHead-Engine/vendor/GLM
 	url = https://github.com/g-truc/glm
+	ignore = dirty
 [submodule "GearHead-Engine/vendor/GLFW"]
 	path = GearHead-Engine/vendor/GLFW
 	url = https://github.com/glfw/glfw
+	ignore = dirty
 [submodule "GearHead-Engine/vendor/spdlog"]
 	path = GearHead-Engine/vendor/spdlog
 	url = https://github.com/gabime/spdlog
 [submodule "GearHead-Engine/vendor/ImGUI"]
 	path = GearHead-Engine/vendor/ImGUI
 	url = https://github.com/ocornut/imgui
+[submodule "GearHead-Engine/vendor/VulkanMemoryAllocator"]
+	path = GearHead-Engine/vendor/VulkanMemoryAllocator
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
+[submodule "GearHead-Engine/vendor/tinyobjloader"]
+	path = GearHead-Engine/vendor/tinyobjloader
+	url = https://github.com/tinyobjloader/tinyobjloader
+[submodule "GearHead-Engine/vendor/stb"]
+	path = GearHead-Engine/vendor/stb
+	url = https://github.com/nothings/stb
+[submodule "GearHead-Engine/vendor/vk-bootstrap"]
+	path = GearHead-Engine/vendor/vk-bootstrap
+	url = https://github.com/charles-lunarg/vk-bootstrap

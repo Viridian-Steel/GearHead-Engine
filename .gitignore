@@ -4,18 +4,20 @@
 **/bin/
 bin-int/
 **/Build
+**/Out/
 
+**.spv
 #Built Automatically
 /GearHead-Engine/Libs
 /GearHead-Engine/Include
 
 # Vendor Files will be automatically downloaded depending on need, except for the premake customization files. Those need to be there.
-!/Vendor
-
+#!/Vendor
+#
 /Vendor/*
-!/Vendor/premake
-/Vendor/premake/*
-!/Vendor/premake/premake_customization
+#!/Vendor/premake
+#/Vendor/premake/*
+#!/Vendor/premake/premake_customization
 
 
 
@@ -26,9 +28,22 @@ bin-int/
 .vscode/
 
 # All solutions files. They get built
-*.sln
+/**.sln
 *.vcxproj*
 
+# build files
+*.obj
+*.lib
+*.pdb
+
+*.stamp
+*.stamp.depend
+*.recipe
+*.tlog
+
+
+
+*.cmake
 
 
 # log files are generated during execution

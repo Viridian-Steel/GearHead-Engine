@@ -1,0 +1,113 @@
+# Engine Files
+
+project("GearHead-Engine")
+
+
+# 1. Compile all the libraries/ gett all the header files
+add_subdirectory(vendor)
+
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+# 2.1 ...ok look I know that glob is not good but it's fine for this
+file(GLOB_RECURSE GLSL_SOURCE_FILES
+    "${PROJECT_SOURCE_DIR}/src/Render/Vulkan/Shaders/*.frag"
+    "${PROJECT_SOURCE_DIR}/src/Render/Vulkan/Shaders/*.vert"
+    "${PROJECT_SOURCE_DIR}/src/Render/Vulkan/Shaders/*.comp"
+    )
+
+# 2.2 iterate each shader
+foreach(GLSL ${GLSL_SOURCE_FILES})
+  message(STATUS "BUILDING SHADER")
+  get_filename_component(FILE_NAME ${GLSL} NAME)
+  set(SPIRV "${PROJECT_SOURCE_DIR}/src/Render/Vulkan/Shaders/${FILE_NAME}.spv")
+  message(STATUS ${GLSL})
+  # 2.3 execute glslang command to compile that specific shader
+  add_custom_command(
+    OUTPUT ${SPIRV}
+    COMMAND ${GLSL_VALIDATOR} -V ${GLSL} -o ${SPIRV}
+    DEPENDS ${GLSL})
+  list(APPEND SPIRV_BINARY_FILES ${SPIRV})
+endforeach(GLSL)
+
+add_custom_target(
+    Shaders 
+    DEPENDS ${SPIRV_BINARY_FILES}
+    )
+
+
+# 2. Add the library
+add_library( GearHead-Engine
+
+	SHARED
+    
+	src/ghpch.hpp
+    src/GearHead/Core.hpp
+    src/GearHead/EntryPoint.hpp
+    src/GearHead/Log.hpp
+    src/GearHead/Log.cpp
+    src/GearHead/Application.cpp
+    src/GearHead/Application.hpp
+    
+    src/GearHead/Events/Event.hpp
+    src/GearHead/Events/ApplicationEvent.hpp
+    src/GearHead/Events/KeyEvent.hpp
+    src/GearHead/Events/MouseEvent.hpp
+
+
+    src/Render/Vulkan/VkInit.hpp
+    src/Render/Vulkan/VkTypes.hpp
+    src/Render/Vulkan/VkWindow.hpp
+	src/Render/Vulkan/VkWindow.cpp
+	src/Render/Vulkan/VkPipeline.hpp
+
+ "src/Render/Vulkan/VkInit.cpp")
+
+target_include_directories( GearHead-Engine PUBLIC
+	${PROJECT_SOURCE_DIR}/src
+	glm
+    vendor/stb # maybe should be in the above?
+)
+
+# 3. Link the libraries
+target_link_libraries( GearHead-Engine
+    vk-bootstrap::vk-bootstrap
+    imgui
+    glfw
+    spdlog::spdlog
+    GPUOpen::VulkanMemoryAllocator
+    Vulkan::Vulkan
+)
+
+target_precompile_headers(GearHead-Engine PUBLIC src/ghpch.hpp)
+
+if(WIN32)
+    target_compile_definitions(GearHead-Engine PUBLIC GEARHEAD_PLATFORM_WINDOWS)    
+elseif(UNIX)
+    target_compile_definitions(GearHead-Engine PUBLIC GEARHEAD_PLATFORM_UNIX)
+endif()
+
+target_compile_definitions(GearHead-Engine
+    PRIVATE
+        GEARHEAD_BUILD_DLL
+    PUBLIC
+        $<$<CONFIG:Debug>:GEARHEAD_DEBUG GEARHEAD_ENABLE_ASSERTS>
+        $<$<CONFIG:RelWithDebInfo>:GEARHEAD_DEBUG GEARHEAD_ENABLE_ASSERTS>
+        $<$<CONFIG:Release>:GEARHEAD_RELEASE>
+        $<$<CONFIG:MinSizeRel>:GEARHEAD_DIST>
+)
+
+set(SHADER_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Shaders")
+
+make_directory(${SHADER_OUTPUT_DIRECTORY})
+
+foreach(SPV ${SPIRV_BINARY_FILES})
+	add_custom_command(TARGET Shaders POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy
+					${SPV}
+					${SHADER_OUTPUT_DIRECTORY}
+					COMMENT "Copying ${SPV} to ${SHADER_OUTPUT_DIRECTORY}"
+
+	)
+endforeach(SPV)
+
+add_dependencies(GearHead-Engine Shaders)
+

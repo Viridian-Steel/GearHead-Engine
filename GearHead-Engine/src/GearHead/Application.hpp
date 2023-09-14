@@ -1,9 +1,9 @@
 #pragma once
 #include "Core.hpp"
-#include "Render/GHWindow.hpp"
-#include "Render/GHDevice.hpp"
+
 
 #include "Events/Event.hpp"
+#include "Window.hpp"
 
 
 namespace GearHead {
@@ -21,9 +21,9 @@ namespace GearHead {
 
 
     private:
-		GHWindow ghWindow{ initwidth, initheight, true, "U work?"};
-		GHDevice ghDevice{ ghWindow };
 		
+		std::unique_ptr<Window> window;
+
         bool m_Running = true;
     };
     

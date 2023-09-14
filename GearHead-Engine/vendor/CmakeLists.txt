@@ -1,0 +1,31 @@
+
+find_package(Vulkan REQUIRED)
+
+add_subdirectory(GLM) #linked
+add_subdirectory(vk-bootstrap)  #linked
+add_subdirectory(GLFW) # linked
+add_subdirectory(spdlog) # linked
+add_subdirectory(VulkanMemoryAllocator) # linked
+add_subdirectory(tinyobjloader) # not sure
+
+
+add_library(imgui STATIC)
+
+target_include_directories(imgui PUBLIC ImGUI)
+
+target_sources(imgui PRIVATE
+    ImGUI/imgui.h
+    ImGUI/imgui.cpp
+
+    ImGUI/imgui_demo.cpp
+    ImGUI/imgui_draw.cpp
+    ImGUI/imgui_widgets.cpp
+
+    ImGUI/backends/imgui_impl_vulkan.cpp
+    ImGUI/backends/imgui_impl_vulkan.h
+    ImGUI/backends/imgui_impl_glfw.cpp
+    ImGUI/backends/imgui_impl_glfw.h
+)
+
+target_link_libraries(imgui PUBLIC Vulkan::Vulkan glfw)
+

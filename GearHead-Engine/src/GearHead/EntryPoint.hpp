@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
+#include "Application.hpp"
 
 #ifdef GEARHEAD_PLATFORM_WINDOWS
 
@@ -11,8 +12,6 @@ int main( int argc, char** argv) {
 
     GearHead::Log::Init();
     GEARHEAD_CORE_WARN("Initialized Log");
-    int a = 5;
-    GEARHEAD_INFO("TESTING! Var={0}",a);
 
     auto app = GearHead::CreateApplication();
 	try {

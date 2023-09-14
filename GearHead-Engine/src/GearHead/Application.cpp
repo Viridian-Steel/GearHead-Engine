@@ -8,7 +8,7 @@
 
 namespace GearHead{
     Application::Application() {
-		        
+		window = std::unique_ptr<Window>(Window::Create());
     }
 
     Application::~Application(){
@@ -16,10 +16,16 @@ namespace GearHead{
     }
     
     void Application::Run(){
-		while (ghWindow.ShouldClose()) {
-			
-			ghWindow.OnUpdate();
+		
+
+		while (window->ShouldClose()) {
+			window->OnUpdate();
 		}
+
+		//while (ghWindow.ShouldClose()) {
+		//	
+		//	ghWindow.OnUpdate();
+		//}
 		GEARHEAD_CORE_CRITICAL("APP CLOSED");
     }
 

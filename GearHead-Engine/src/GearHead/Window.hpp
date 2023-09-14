@@ -1,10 +1,10 @@
 #pragma once
 
 
-#include "ghpch.h"
+#include "ghpch.hpp"
 
-#include "GearHead/Core.h"
-#include "GearHead/Events/Event.h"
+#include "GearHead/Core.hpp"
+#include "GearHead/Events/Event.hpp"
 
 
 // Interface For desktop system Window
@@ -23,11 +23,17 @@ namespace GearHead {
 
 	class GEARHEAD_API Window {
 	public:
+
+
 		using EventCallbackFn = std::function<void(Event&)>;
 
-		virtual ~Window() {}
+		virtual ~Window() {} // will use this as cleanup
 
+		virtual int ShouldClose() = 0;
+		
 		virtual void OnUpdate() = 0;
+
+		virtual void DrawFrame() = 0;
 
 
 		virtual unsigned int GetWidth() const = 0;
@@ -42,6 +48,9 @@ namespace GearHead {
 
 
 		static Window* Create(const WindowProps& props = WindowProps());
+
+	protected:
+		bool isInitialized{false};
 
 	};
 }

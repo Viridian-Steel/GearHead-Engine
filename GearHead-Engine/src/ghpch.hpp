@@ -7,6 +7,7 @@
 #include <functional>
 #include <optional>
 
+#include <deque>
 #include <string>
 #include <sstream>
 #include <vector>

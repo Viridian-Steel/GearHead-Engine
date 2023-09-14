@@ -1,6 +1,9 @@
 @echo off
 
-IF "%~3" == "" ( GOTO exCmake ) ELSE ( GOTO inCmake )
+rem 1 is the path to cmake. use "." to use external cmake
+rem 2 is release or debug
+
+IF "%~1" == "." ( GOTO exCmake ) ELSE ( GOTO inCmake )
 
 
 :exCmake
