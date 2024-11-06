@@ -1,5 +1,6 @@
 #pragma once
 
+#define nameof(x) #x
 
 #ifdef GEARHEAD_PLATFORM_WINDOWS
 
@@ -33,17 +34,29 @@
 #endif 
 
 #ifdef GEARHEAD_ENABLE_ASSERTS
+
     #define GEARHEAD_ASSERT(x, ...) {if(!x){ GEARHEAD_ERROR("Assertion Failed: {0}", __VA_ARGS__); GEARHEAD_DEBUGBREAK(); } } 
     #define GEARHEAD_CORE_ASSERT(x, ...) {if(!x){ GEARHEAD_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); GEARHEAD_DEBUGBREAK(); } }
+
 	#define GEARHEAD_ASSERT_FUNC(x, ...) {if(!x){ GEARHEAD_ERROR("Assertion Failed: {0}", __VA_ARGS__); GEARHEAD_DEBUGBREAK(); } } 
     #define GEARHEAD_CORE_ASSERT_FUNC(x, ...) {if(!x){ GEARHEAD_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); GEARHEAD_DEBUGBREAK(); } }
+
+	#define GEARHEAD_VKSUCCESS_CHECK(x) { auto res = x; \
+						if(res != 0) { \
+						GEARHEAD_CORE_ERROR("VK Check Failed! Error Code: {0}", static_cast<int>(res));\
+						 GEARHEAD_DEBUGBREAK();}\
+	}
 
 #else
     #define GEARHEAD_ASSERT(x, ...) 
 	#define GEARHEAD_ASSERT_FUNC(x, ...) x
     #define GEARHEAD_CORE_ASSERT(x, ...)
 	#define GEARHEAD_CORE_ASSERT_FUNC(x, ...) x
-
+	#define GEARHEAD_VKSUCCESS_CHECK(x) { auto res = x; \
+						if(res != 0) { \
+						GEARHEAD_CORE_ERROR("VK Check Failed! Error Code: {0}", static_cast<int>(res));\
+						 abort();}\
+	}
 #endif
 
 

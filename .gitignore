@@ -11,7 +11,9 @@
 
 /Vendor/*
 
+Out-gcc/**
 
+/GearHead-Engine/Vendor/VulkanSDK/**
 
 
 
@@ -37,6 +39,10 @@
 
 
 *.cmake
+
+*.vert*
+*.frag*
+**.comp*
 
 **.lua
 

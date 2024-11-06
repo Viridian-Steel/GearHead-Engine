@@ -10,7 +10,7 @@ from urllib.request import urlopen
 
 class VulkanConfiguration:
     requiredVulkanVersion = "1.3."
-    installVulkanVersion = "1.3.250.0"
+    installVulkanVersion = "1.3.296.0"
     vulkanDirectory = "./GearHead-Engine/vendor/VulkanSDK"
 
     vSDK = ""
@@ -29,7 +29,6 @@ class VulkanConfiguration:
             
         if (not cls.CheckVulkanSDKDebugLibs()):
             print("\nNo Vulkan SDK debug libs found. Install Vulkan SDK with debug libs.")
-            print("(see docs.hazelengine.com/GettingStarted for more info).")
             print("Debug configuration disabled.")
 
     @classmethod

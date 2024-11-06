@@ -38,3 +38,6 @@ target_link_libraries( Game
     Vulkan::Vulkan
 )
 
+install( TARGETS Game
+	RUNTIME DESTINATION bin
+)

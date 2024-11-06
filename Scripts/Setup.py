@@ -44,6 +44,8 @@ vkPath = VulkanRequirements.GetVulkanSDK()
 
 #if (cmakeInstalled and premakeInstalled):
 if (cmakeInstalled):
+
+    
     if CmakeRequirements.UseExternal():
         subprocess.call([os.path.abspath("./scripts/Compile.bat")])
 
@@ -51,4 +53,4 @@ if (cmakeInstalled):
     
 
 else:
-    print("GearHead requires Cmake and Premake to generate Project.")
+    print("GearHead requires Cmake to generate Project.")

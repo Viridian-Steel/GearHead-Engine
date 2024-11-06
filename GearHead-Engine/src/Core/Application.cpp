@@ -1,7 +1,6 @@
 #include "ghpch.hpp"
 
 #include "Application.hpp"
-#include "Events/ApplicationEvent.hpp"
 #include "Log.hpp"
 
 
@@ -21,11 +20,8 @@ namespace GearHead{
 		while (window->ShouldClose()) {
 			window->OnUpdate();
 		}
+		
 
-		//while (ghWindow.ShouldClose()) {
-		//	
-		//	ghWindow.OnUpdate();
-		//}
 		GEARHEAD_CORE_CRITICAL("APP CLOSED");
     }
 

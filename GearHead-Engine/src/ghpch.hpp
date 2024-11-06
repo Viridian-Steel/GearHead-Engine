@@ -16,8 +16,10 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <stdexcept>
+#include <span>
+#include <fstream>
 
-#include "GearHead/Log.hpp"
+#include "Core/Log.hpp"
 
 
 #ifdef GEARHEAD_PLATFORM_WINDOWS

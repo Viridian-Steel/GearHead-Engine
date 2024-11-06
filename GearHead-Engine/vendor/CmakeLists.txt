@@ -1,5 +1,6 @@
 
 find_package(Vulkan REQUIRED)
+message("Searched for Vulkan")
 
 add_subdirectory(GLM) #linked
 add_subdirectory(vk-bootstrap)  #linked
@@ -20,6 +21,7 @@ target_sources(imgui PRIVATE
     ImGUI/imgui_demo.cpp
     ImGUI/imgui_draw.cpp
     ImGUI/imgui_widgets.cpp
+    ImGUI/imgui_tables.cpp
 
     ImGUI/backends/imgui_impl_vulkan.cpp
     ImGUI/backends/imgui_impl_vulkan.h

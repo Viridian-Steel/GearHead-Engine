@@ -19,12 +19,13 @@ foreach(GLSL ${GLSL_SOURCE_FILES})
   message(STATUS "BUILDING SHADER")
   get_filename_component(FILE_NAME ${GLSL} NAME)
   set(SPIRV "${PROJECT_SOURCE_DIR}/src/Render/Vulkan/Shaders/${FILE_NAME}.spv")
-  message(STATUS ${GLSL})
+  message(STATUS "Name : ${GLSL}")
   # 2.3 execute glslang command to compile that specific shader
   add_custom_command(
     OUTPUT ${SPIRV}
     COMMAND ${GLSL_VALIDATOR} -V ${GLSL} -o ${SPIRV}
     DEPENDS ${GLSL})
+	message(STATUS "Compiled shader ${SPIRV}")
   list(APPEND SPIRV_BINARY_FILES ${SPIRV})
 endforeach(GLSL)
 
@@ -40,30 +41,37 @@ add_library( GearHead-Engine
 	SHARED
     
 	src/ghpch.hpp
-    src/GearHead/Core.hpp
-    src/GearHead/EntryPoint.hpp
-    src/GearHead/Log.hpp
-    src/GearHead/Log.cpp
-    src/GearHead/Application.cpp
-    src/GearHead/Application.hpp
-    
-    src/GearHead/Events/Event.hpp
-    src/GearHead/Events/ApplicationEvent.hpp
-    src/GearHead/Events/KeyEvent.hpp
-    src/GearHead/Events/MouseEvent.hpp
+	src/Gearhead.hpp # do I need to?
+    src/Core/Core.hpp
+    src/Core/EntryPoint.hpp
+    src/Core/Log.hpp
+    src/Core/Log.cpp
+    src/Core/Application.cpp
+    src/Core/Application.hpp
 
+	src/Game/Common/Types.hpp
+	src/Game/Common/Types.cpp
+	src/Game/Components/Primitives/Mesh.hpp
 
     src/Render/Vulkan/VkInit.hpp
+	src/Render/Vulkan/VkInit.cpp
     src/Render/Vulkan/VkTypes.hpp
     src/Render/Vulkan/VkWindow.hpp
 	src/Render/Vulkan/VkWindow.cpp
 	src/Render/Vulkan/VkPipeline.hpp
+	src/Render/Vulkan/VkPipeline.cpp
+	src/Render/Vulkan/VkImages.cpp
+	src/Render/Vulkan/VkImages.hpp
+	src/Render/Vulkan/VkDescriptors.hpp
+	src/Render/Vulkan/VkDescriptors.cpp
+)
 
- "src/Render/Vulkan/VkInit.cpp")
+set_target_properties(GearHead-Engine PROPERTIES PUBLIC_HEADER
+	src/GearHead.hpp
+)
 
 target_include_directories( GearHead-Engine PUBLIC
 	${PROJECT_SOURCE_DIR}/src
-	glm
     vendor/stb # maybe should be in the above?
 )
 
@@ -71,20 +79,24 @@ target_include_directories( GearHead-Engine PUBLIC
 target_link_libraries( GearHead-Engine
     vk-bootstrap::vk-bootstrap
     imgui
+	glm
     glfw
     spdlog::spdlog
     GPUOpen::VulkanMemoryAllocator
     Vulkan::Vulkan
 )
 
+# 4. Precompile Headers
 target_precompile_headers(GearHead-Engine PUBLIC src/ghpch.hpp)
 
+# 5. Assign platform variable
 if(WIN32)
     target_compile_definitions(GearHead-Engine PUBLIC GEARHEAD_PLATFORM_WINDOWS)    
 elseif(UNIX)
     target_compile_definitions(GearHead-Engine PUBLIC GEARHEAD_PLATFORM_UNIX)
 endif()
 
+# 5.1 Assign debug variables
 target_compile_definitions(GearHead-Engine
     PRIVATE
         GEARHEAD_BUILD_DLL
@@ -97,6 +109,7 @@ target_compile_definitions(GearHead-Engine
 
 set(SHADER_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Shaders")
 
+# 6. Add compiled shaders to the required folder
 make_directory(${SHADER_OUTPUT_DIRECTORY})
 
 foreach(SPV ${SPIRV_BINARY_FILES})
@@ -110,4 +123,21 @@ foreach(SPV ${SPIRV_BINARY_FILES})
 endforeach(SPV)
 
 add_dependencies(GearHead-Engine Shaders)
+
+install(DIRECTORY ${SHADER_OUTPUT_DIRECTORY}
+	DESTINATION bin
+	FILES_MATCHING PATTERN "*.spv"
+)
+
+install(TARGETS GearHead-Engine vk-bootstrap imgui glfw spdlog VulkanMemoryAllocator 
+		CONFIGURATIONS Debug
+		RUNTIME DESTINATION bin
+		LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+		PUBLIC_HEADER DESTINATION include
+		CONFIGURATIONS Release
+		RUNTIME DESTINATION bin
+		LIBRARY DESTINATION lib
+		PUBLIC_HEADER DESTINATION include
+)
 
