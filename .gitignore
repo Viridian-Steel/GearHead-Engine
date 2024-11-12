@@ -40,11 +40,6 @@ Out-gcc/**
 
 *.cmake
 
-*.vert*
-*.frag*
-**.comp*
-
-**.lua
 
 # log files are generated during execution
 *.log

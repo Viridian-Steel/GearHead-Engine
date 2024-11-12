@@ -2,7 +2,7 @@
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
-
+#include <glm/glm.hpp>
 #include "VkTypes.hpp"
 #include <Core/Window.hpp>
 
@@ -28,6 +28,23 @@ namespace GearHead {
 		}
 	};
 
+	struct ComputePushConstants {
+		glm::vec4 data1;
+		glm::vec4 data2;
+		glm::vec4 data3;
+		glm::vec4 data4;
+	};
+
+	struct ComputeEffect {
+		const char* name;
+
+		VkPipeline pipeline;
+		VkPipelineLayout layout;
+
+		ComputePushConstants data;
+	};
+
+
 	struct FrameData {
 		VkCommandPool _pool;
 		VkCommandBuffer _buffer;
@@ -35,6 +52,9 @@ namespace GearHead {
 		VkFence _renderFence;
 		DeletionQueue _deletionQueue;
 	};
+
+
+
 
 	constexpr unsigned int FRAME_OVERLAP = 2U;
 
@@ -76,7 +96,7 @@ namespace GearHead {
 
 
 		//Draw Calls
-		void DrawBackground(VkCommandBuffer cmd) const;
+		void DrawBackground(VkCommandBuffer cmd);
 		void DrawImGUI(VkCommandBuffer cmd, VkImageView targetImageView) const;
 
 
@@ -156,6 +176,11 @@ namespace GearHead {
 		VkFence _immFence;
 		VkCommandBuffer _immCommandBuffer;
 		VkCommandPool _immCommandPool;
+
+		//ImGUI Editable Prarmeters
+		std::vector<ComputeEffect> backgroundEffects;
+		int currentBackgroundEffect{ 0 };
+
 
 	};
 }
